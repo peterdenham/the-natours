@@ -145,27 +145,20 @@ const deleteUser = (req, res) => {
     message: 'this route is not yet implemented',
   });
 };
-// app.get('/api/v1/tours', getAllTours);
-// app.post('/api/v1/tours', createTour);
-// app.get('/api/v1/tours/:id', getTour);
-// app.patch('/api/v1/tours/:id', updateTour);
-// app.delete('/api/v1/tours/:id', deleteTour);
 
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
+const tourRouter = express.Router();
+app.use('/api/v1/tours', tourRouter);
 
-app
-  .route('/api/v1/tours/:id')
-  .get(getTour)
-  .patch(updateTour)
-  .delete(deleteTour);
+tourRouter.route('/').get(getAllTours).post(createTour);
 
-app.route('/api/v1/users').get(getAllUsers).post(createUser);
+tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
 
-app
-  .route('/api/v1/users/:id')
-  .get(getUser)
-  .patch(updateUser)
-  .delete(deleteUser);
+const userRouter = express.Router();
+app.use('/api/v1/users', userRouter);
+
+userRouter.route('/').get(getAllUsers).post(createUser);
+
+userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 // start express server
 const port = 3000;
